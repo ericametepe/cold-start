@@ -1,0 +1,64 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: andriveau-api-gen
+  labels:
+    app: api-gen
+spec:
+  selector:
+    matchLabels:
+      app: api-gen
+  replicas: 1
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+  minReadySeconds: 5
+  template:
+    metadata:
+      labels:
+        app: api-gen
+        service: andriveau-api-gen
+    spec:
+      volumes:
+        - name: secret-volume
+          secret:
+            secretName: api-gen-secret
+      containers:
+      - name: web
+        image: andriveau/api-gen-exposition
+        volumeMounts:
+          # name must match the volume name below
+          - name: secret-volume
+            mountPath: /etc/secret-volume
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 80
+        livenessProbe:
+          httpGet:
+            path: /actuator/health/liveness
+            port: 8080
+          initialDelaySeconds: 3
+          periodSeconds: 3
+        readinessProbe:
+          httpGet:
+            path: /actuator/health/readiness
+            port: 8080
+          initialDelaySeconds: 10
+          timeoutSeconds: 2
+          periodSeconds: 3
+          failureThreshold: 1
+
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: andriveau-api-gen-svc
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 80
+  selector:
+    app: api-gen
+    service: andriveau-api-gen

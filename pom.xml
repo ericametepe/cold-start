@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>fr.andriveau</groupId>
+	<artifactId>api-gen</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<name>api-gen</name>
+	<packaging>pom</packaging>
+
+	<description>l’API GED</description>
+
+    <modules>
+        <module>api-gen-exposition</module>
+		<module>api-gen-application</module>
+		<module>api-gen-infrastructure</module>
+		<module>api-gen-domain</module>
+	</modules>
+
+
+
+</project>

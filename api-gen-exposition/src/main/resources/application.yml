@@ -1,0 +1,33 @@
+
+keycloak:
+  bearer-only: true
+  realm: ${KEYCLOAK_ANDRIVEAU_REALM}
+  auth-server-url: ${KEYCLOAK_SERVER_URL}
+  resource: ${KEYCLOAK_RESOURCE}
+  credentials:
+    secret: ${KEYCLOAK_CLIENT_SECRET}
+  use-resource-role-mappings: true
+  enabled: true
+management:
+  endpoints:
+    enabled-by-default: true
+    jmx:
+      exposure:
+        include: "health,info"
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    info:
+      enabled: true
+    metrics:
+      enabled: true
+    health:
+      probes:
+        enabled: true
+    prometheus:
+      enabled: true
+springdoc:
+  api-docs:
+    enabled: true
+
